@@ -22,11 +22,21 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Application
-    surfaceOrient
+    reverseSurface
+
+Version of OpenFOAM
+    4.1
 
 Description
-    Set normal consistent with respect to a user provided 'outside' point.
-    If the -inside option is used the point is considered inside.
+    This is utility to reverse all faces of STL.
+    This is made on "surfaceOrient"
+    "reverseSurface old.stl new.stl 0" -> do nothing (precision is change).
+    "reverseSurface old.stl new.stl 1" -> flip all surfaces (precision is change).
+
+    example
+       STL file made from SALOME, to make one region with interfaces and surfaces.
+       But if one or more interface is reversed, you can not snappyHexMesh nor cfMesh.
+       You have to change the directions of faces.
 
 \*---------------------------------------------------------------------------*/
 
