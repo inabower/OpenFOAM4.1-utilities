@@ -11,7 +11,7 @@ They are utilities of OpenFOAM 4.1 for myself.
     > Devide cyclicAMI as you want
     > Averaging the numbers of cells in one processor.
 
- - faceDirection
+- faceDirection
 
     To post-process the direction of patches.
     After exection, you can get the volVectorField.
@@ -20,7 +20,7 @@ They are utilities of OpenFOAM 4.1 for myself.
     exemple
     > Checking after createBaffles if your mesh is created by other meshing software (i.e. SALOME)
 
- - reverseSurface
+- reverseSurface
 
     To modify STL files.
     if you tipe "reverseSurface old.stl new.stl 0", you can get STL which is changed its precision for OpenFOAM.
