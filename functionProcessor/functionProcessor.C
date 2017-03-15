@@ -50,9 +50,9 @@ int main(int argc, char *argv[])
     #include "addRegionOption.H"
     #include "setRootCase.H"
     #include "createTime.H"
+    #include "createNamedMesh.H"
 
     const bool overwrite = args.optionFound("overwrite");
-    #include "createNamedMesh.H"
 
     Info<< "Reading decomposeParDict\n" << endl;
     IOdictionary dict
@@ -101,14 +101,11 @@ int main(int argc, char *argv[])
     dict.readIfPresent("numberOfSubdomains", nProc);
 
     // count cells for each processors
-    List<label> nCell(nProc, 0);
+    labelList nCell(nProc, 0);
     label err(0);
 
     // if -overwrite, cellDist is wrote in  directory
-    if (!overwrite)
-    {
-        runTime++;
-    }
+    if(!overwrite) runTime++;
 
     // execute your code in "codeEnd"
     runTime.functionObjects().end();
