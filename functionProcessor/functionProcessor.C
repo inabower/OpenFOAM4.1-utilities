@@ -21,8 +21,13 @@ License
     You should have received a copy of the GNU General Public License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
+Version
+    OpenFOAM4.1
 Description
-    Set values on a selected set of cells/patchfaces through a dictionary.
+    Decompose cells to each processor as you want.
+    You have to modify system/cotrolDict/functions.
+    If not, this is a utility just to read 0/cellDist and to write 
+    constant/cellDecomposition. 
 
 \*---------------------------------------------------------------------------*/
 
@@ -62,6 +67,7 @@ int main(int argc, char *argv[])
         )
     );
 
+    // field of distribution of processor
     volScalarField cellDist
     (
         IOobject
@@ -76,6 +82,7 @@ int main(int argc, char *argv[])
         dimensionedScalar("cellDist", dimless, -1.0)
     );
 
+    // list to decomposePar
     labelIOList cellDecomposition
     (
         IOobject
@@ -89,19 +96,25 @@ int main(int argc, char *argv[])
         mesh.V().size()
     );
 
+    // number of processor is read from decomposeParDict
     label nProc;
     dict.readIfPresent("numberOfSubdomains", nProc);
 
+    // count cells for each processors
     List<label> nCell(nProc, 0);
     label err(0);
 
+    // if -overwrite, cellDist is wrote in  directory
     if (!overwrite)
     {
         runTime++;
     }
 
+    // execute your code in "codeEnd"
     runTime.functionObjects().end();
 
+    // count the cells which are not distributed
+    // and write into constant/cellDecomposition
     forAll(cellDist, i)
     {
         if(cellDist[i] < 0) err++;
