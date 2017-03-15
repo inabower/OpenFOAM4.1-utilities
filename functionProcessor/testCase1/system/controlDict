@@ -1,0 +1,92 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                |
+| \\      /  F ield         | cfMesh: A library for mesh generation          |
+|  \\    /   O peration     |                                                |
+|   \\  /    A nd           | Author: Franjo Juretic                         |
+|    \\/     M anipulation  | E-mail: franjo.juretic@c-fields.com            |
+\*---------------------------------------------------------------------------*/
+
+FoamFile
+{
+    version   2.0;
+    format    ascii;
+    class     dictionary;
+    location  "system";
+    object    meshDict;
+}
+
+// ************************************************************************* //
+
+applicationClass    ;
+
+startFrom           latestTime;
+
+startTime           0;
+
+stopAt              endTime;
+
+endTime             500;
+
+deltaT              1;
+
+writeControl        timeStep;
+
+writeInterval       100;
+
+cycleWrite          0;
+
+writeFormat         ascii;
+
+writeCompression    uncompressed;
+
+timeFormat          general;
+
+timePrecision       6;
+
+runTimeModifiable   yes;
+
+nCorrectors         2;
+
+nNonOrthogonalCorrectors 0;
+
+functions
+{
+    processor
+    {
+        libs ("libutilityFunctionObjects.so");
+        type  coded;
+        name  processor;
+
+        codeEnd
+        #{
+            Info << "coded Function Start" << endl;
+
+            volScalarField& dist = const_cast<volScalarField&>
+            (mesh().lookupObject<volScalarField>("cellDist"));
+
+            forAll(dist, i)
+            {
+                const vector& C = mesh().C()[i];
+                const scalar& x = C[0];
+                const scalar& y = C[1];
+                const scalar& z = C[2];
+
+                scalar& d = dist[i];
+
+                const scalar sqrR = Foam::sqr(x) + Foam::sqr(y);
+
+                if(sqrR>Foam::sqr(0.4)) d=0;
+                else d=1;
+
+                if(z>1.3) d+=2;
+                else if(z>0.7) d+=4;
+
+                if(z<0.1) d=6;
+
+                if(z>1.9) d=7;
+            }
+        #};
+    }
+}
+
+// ************************************************************************* //
