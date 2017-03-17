@@ -1,9 +1,9 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                |
-| \\      /  F ield         | cfMesh: A library for mesh generation          |
+| \\      /  F ield         |                                                |
 |  \\    /   O peration     |                                                |
-|   \\  /    A nd           | Author: Franjo Juretic                         |
-|    \\/     M anipulation  | E-mail: franjo.juretic@c-fields.com            |
+|   \\  /    A nd           |                                                |
+|    \\/     M anipulation  |                                                |
 \*---------------------------------------------------------------------------*/
 
 FoamFile
@@ -19,6 +19,7 @@ FoamFile
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 numberOfSubdomains  8;
+method          manual;
 
 manualCoeffs
 {
