@@ -1,0 +1,15 @@
+#!/bin/bash
+cd ${0%/*} || exit 1    # Run from this directory
+# Source tutorial run functions
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+mv system/controlDict.decompose system/controlDict
+runApplication checkMesh
+runApplication functionProcessor -overwrite
+
+mv system/controlDict system/controlDict.decompose
+mv system/controlDict.simple system/controlDict
+
+runApplication decomposePar
+runParallel `getApplication`
+runApplication reconstructPar
