@@ -22,19 +22,20 @@ boundaryField
 {
     inlet
     {
-        type            freestream;
-        freestreamValue uniform (0.1 0 0);
+        type    fixedValue;
+        value   uniform (0.1 0 0);
     }
 
     outlet
     {
-        type            freestream;
-        freestreamValue uniform (0.1 0 0);
+        type    inletOutlet;
+        value   uniform (0.1 0 0);
+        inletValue   uniform (0 0 0);
     }
 
     wall
     {
-        type            noSlip;
+        type    noSlip;
     }
 }
 
